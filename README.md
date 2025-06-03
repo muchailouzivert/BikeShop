@@ -46,15 +46,15 @@
 
 **S — Single Responsibility Principle**
 
-Кожен клас має одну чітко визначену відповідальність:
+- Кожен клас має одну чітко визначену відповідальність:
 
-UserFacade — логіка реєстрації, входу, виходу, email-сповіщень та управління замовленнями.
+- UserFacade — логіка реєстрації, входу, виходу, email-сповіщень та управління замовленнями.
 
-BikeFacade — створення велосипеда та пов’язаного замовлення.
+- BikeFacade — створення велосипеда та пов’язаного замовлення.
 
-BikeBuilder / ElectricBikeBuilder / BikeDirector — побудова об'єкта Bike.
+- BikeBuilder / ElectricBikeBuilder / BikeDirector — побудова об'єкта Bike.
 
-NotifierContext — виконує лише функції сповіщення.
+- NotifierContext — виконує лише функції сповіщення.
 
 **O — Open/Closed Principle**
 
