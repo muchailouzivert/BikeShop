@@ -68,7 +68,7 @@ NotifierContext — виконує лише функції сповіщення.
 
 Усі підкласи BikeBuilder (наприклад, ElectricBikeBuilder) можуть використовуватись замість базового класу без порушення логіки.
 
-**I — Interface Segregation Principle
+**I — Interface Segregation Principle**
 
 Класи реалізують лише ті методи, які їм потрібні. Немає зайвих або порожніх методів.
 
