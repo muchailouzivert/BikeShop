@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .hero {
+            background: url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+            height: 300px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            background-color: rgba(0,0,0,0.5);
+            padding: 20px 40px;
+            border-radius: 10px;
+        }
+        .action-buttons {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="hero">
+        <h1>Welcome to Bike Shop</h1>
+    </div>
+
+    <div class="container text-center action-buttons">
+        {% if user.is_authenticated %}
+            <h2 class="my-4">Welcome, {{ user.username }} 👋</h2>
+
+            <a href="{% url 'order_bike' %}" class="btn btn-success btn-lg my-2">🚴 Order a Bike</a><br>
+            <a href="{% url 'user_profile' %}" class="btn btn-info btn-lg my-2">👤 My Profile</a><br>
+            <a href="{% url 'logout' %}" class="btn btn-dark btn-lg my-2">🚪 Logout</a>
+
+        {% else %}
+            <h2 class="my-4">Welcome, Guest 🧍</h2>
+
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg my-2">🔐 Sign In</a><br>
+            <a href="{% url 'register' %}" class="btn btn-secondary btn-lg my-2">📝 Sign Up</a>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="text-center mt-5">
+    <p>&copy; 2025 Bike Shop. All rights reserved.</p>
+</html>

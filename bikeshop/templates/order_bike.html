@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order a Bike</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            max-width: 500px;
+            margin: 40px auto;
+            border-radius: 10px;
+        }
+
+        #battery-field {
+            display: none;
+        }
+
+        .color-box {
+            width: 50px;
+            height: 25px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1 class="fw-bold">🚲 Order a Bike</h1>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger text-center mt-3">{{ error }}</div>
+        {% endif %}
+
+        <div class="card shadow p-4 mt-4">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="type" class="form-label">Bike Type:</label>
+                    <select name="type" id="type" class="form-select" onchange="toggleBatteryField()">
+                        <option value="regular">Regular Bike</option>
+                        <option value="electric">Electric Bike</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="color" class="form-label">Choose Color:</label>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="fw-semibold" id="color-name">#000000</span>
+                        <div class="color-box" id="color-box" style="background-color: #000000;"></div>
+                    </div>
+                    <span class="text-muted">click to Choose:</span>
+                    <input type="color" name="color" id="color" class="form-control form-control-color" value="#000000" onchange="updateColor()" required>
+                </div>
+
+                <div id="battery-field" class="mb-3">
+                    <label for="battery_capacity" class="form-label">Battery Capacity (Wh):</label>
+                    <input type="number" name="battery_capacity" id="battery_capacity" class="form-control" placeholder="e.g. 500">
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">✅ Submit Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleBatteryField() {
+            const type = document.getElementById('type').value;
+            const batteryField = document.getElementById('battery-field');
+            batteryField.style.display = type === 'electric' ? 'block' : 'none';
+        }
+
+        function updateColor() {
+            const picker = document.getElementById('color');
+            const colorName = document.getElementById('color-name');
+            const colorBox = document.getElementById('color-box');
+            colorName.textContent = picker.value;
+            colorBox.style.backgroundColor = picker.value;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
