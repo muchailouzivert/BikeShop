@@ -18,40 +18,40 @@ class UserFacade:
         context = NotifierContext(EmailNotificationStrategy())
         context.notify(subject, message, recipient_email)
 
-@staticmethod
-def register_user(request):
-    TEMPLATE_NAME = 'register.html'
+    @staticmethod
+    def register_user(request):
+        TEMPLATE_NAME = 'register.html'
 
-    if request.user.is_authenticated:
-        return redirect('/')
+        if request.user.is_authenticated:
+            return redirect('/')
 
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            if User.objects.filter(email=email).exists():
+        if request.method == 'POST':
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                email = form.cleaned_data.get('email')
+                if User.objects.filter(email=email).exists():
+                    return render(request, TEMPLATE_NAME, {
+                        'form': form,
+                        'error': 'A user with this email already exists.'
+                    })
+
+                user = form.save()
+                auth_login(request, user)
+
+                UserFacade.send_email(
+                    'Welcome to Our Platform!',
+                    f'Thank you for registering on our platform, {user.username}.',
+                    user.email
+                )
+
+                return redirect('/')
+            else:
                 return render(request, TEMPLATE_NAME, {
                     'form': form,
-                    'error': 'A user with this email already exists.'
+                    'error': 'Invalid form submission.'
                 })
 
-            user = form.save()
-            auth_login(request, user)
-
-            UserFacade.send_email(
-                'Welcome to Our Platform!',
-                f'Thank you for registering on our platform, {user.username}.',
-                user.email
-            )
-
-            return redirect('/')
-        else:
-            return render(request, TEMPLATE_NAME, {
-                'form': form,
-                'error': 'Invalid form submission.'
-            })
-
-    return render(request, TEMPLATE_NAME, {'form': CustomUserCreationForm()})
+        return render(request, TEMPLATE_NAME, {'form': CustomUserCreationForm()})
 
 
     @staticmethod
