@@ -84,7 +84,6 @@ class UserFacadeLoginTests(TestCase):
         response = self.client.get(reverse('logout'))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/')
-        response = self.client.get(reverse('home'))
         self.assertFalse('_auth_user_id' in self.client.session)
 
     def test_accept_order(self):
